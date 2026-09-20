@@ -1,0 +1,323 @@
+/* ==========================================================================
+   BeSpokeHQ — Section components (loaded after main.css)
+   ========================================================================== */
+
+/* ==========================================================================
+   Header over dark bands
+   ========================================================================== */
+.hdr{ transition:transform .55s var(--ease), background .4s var(--ease), color .4s var(--ease); }
+.hdr.on-dark{ --fg:var(--bone); --line:rgba(248,242,233,.24); color:var(--bone); }
+.hdr.on-dark .nav a{ color:var(--bone); }
+.hdr.on-dark .burger span{ background:var(--bone); }
+
+/* The hero paints its own layered background, so the .dark utility must not
+   drop an opaque colour in front of it. */
+.hero.dark, .hero.noir, .phero.dark, .cta.dark{ background:transparent; }
+
+/* ==========================================================================
+   Offers — sticky stacking cards
+   ========================================================================== */
+.offers__head{ display:flex; flex-wrap:wrap; gap:1.5rem 3rem; justify-content:space-between; align-items:end; margin-bottom:clamp(2.5rem,5vw,4rem); }
+.offers__head p{ max-width:42ch; }
+.stack{ position:relative; }
+.card{
+  position:sticky; top:clamp(5.5rem,11vw,7.5rem);
+  background:var(--bone); color:var(--ink);
+  border:1px solid var(--line); border-radius:var(--r-lg);
+  padding:clamp(1.5rem,3.2vw,3rem);
+  display:grid; grid-template-columns:1fr .8fr; gap:clamp(1.5rem,3vw,3rem); align-items:center;
+  box-shadow:0 22px 60px -38px rgba(23,18,15,.55);
+  overflow:hidden; transform-origin:50% 0;
+}
+.card+.card{ margin-top:clamp(1.25rem,2.4vw,2rem); }
+.card--ink{ background:var(--ink); color:var(--bone); border-color:rgba(248,242,233,.16); }
+.card--ink .label, .card--ink .card__lead{ color:#A99786; }
+.card--clay{ background:var(--clay); color:var(--bone); border-color:rgba(248,242,233,.22); }
+.card--clay .label, .card--clay .card__lead{ color:rgba(248,242,233,.82); }
+.card__no{ font-family:var(--mono); font-size:var(--t-label); letter-spacing:.16em; }
+.card__title{ margin-block:1rem .9rem; max-width:16ch; }
+.card__lead{ color:var(--muted); max-width:44ch; }
+.card__price{ display:flex; flex-wrap:wrap; align-items:baseline; gap:.4rem 1rem; margin-top:1.6rem; }
+.card__price b{ font-size:clamp(1.6rem,3.2vw,2.6rem); font-weight:600; letter-spacing:-.045em; line-height:1; }
+.card__price span{ font-size:.9375rem; opacity:.72; }
+.card__list{ margin-top:1.5rem; display:grid; gap:.55rem; }
+.card__list li{ display:flex; gap:.7rem; font-size:.9375rem; line-height:1.4; }
+.card__list li::before{ content:"+"; color:var(--clay); flex:none; font-family:var(--mono); }
+.card--clay .card__list li::before, .card--ink .card__list li::before{ color:var(--amber); }
+.card__act{ margin-top:1.9rem; }
+.card__media{ border-radius:var(--r); overflow:hidden; aspect-ratio:4/3; }
+
+/* ==========================================================================
+   Work — selected client proof, right under the hero
+   ========================================================================== */
+.work__head{ max-width:46ch; }
+.work__grid{
+  margin-top:clamp(2.5rem,5vw,4rem);
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+  background:var(--line); border:1px solid var(--line);
+}
+.work__card{
+  background:var(--bg); padding:clamp(1.75rem,3vw,2.5rem);
+  display:flex; flex-direction:column; gap:1rem; min-height:clamp(260px,24vw,320px);
+  transition:background .4s var(--ease), color .4s var(--ease);
+}
+.work__card:hover{ background:var(--ink); color:var(--bone); }
+.work__card:hover .work__tag{ color:var(--amber); box-shadow:inset 0 0 0 1px rgba(248,242,233,.3); }
+.work__card:hover .work__desc{ color:rgba(248,242,233,.78); }
+.work__no{ font-family:var(--mono); font-size:var(--t-label); letter-spacing:.16em; color:var(--muted); }
+.work__tag{
+  align-self:start; font-family:var(--mono); font-size:.6875rem; letter-spacing:.14em; text-transform:uppercase;
+  padding:.35rem .65rem; border-radius:999px; box-shadow:inset 0 0 0 1px var(--line); color:var(--muted);
+  transition:color .4s var(--ease), box-shadow .4s var(--ease);
+}
+.work__name{ margin-top:auto; font-size:clamp(1.25rem,2.2vw,1.6rem); font-weight:600; letter-spacing:-.028em; }
+.work__desc{ font-size:.9375rem; color:var(--muted); max-width:32ch; transition:color .4s var(--ease); }
+.work__link{
+  display:inline-flex; align-items:center; gap:.5rem; width:fit-content;
+  font-size:.875rem; font-weight:600; border-bottom:1px solid currentColor; padding-bottom:2px;
+}
+.work__link svg{ transition:transform .4s var(--ease); }
+.work__card:hover .work__link svg{ transform:translate(3px,-3px); }
+
+/* ==========================================================================
+   Capabilities grid
+   ========================================================================== */
+.caps{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--r-lg); overflow:hidden; }
+.cap{
+  background:var(--bg); padding:clamp(1.5rem,2.6vw,2.5rem);
+  display:flex; flex-direction:column; min-height:clamp(240px,22vw,320px);
+  position:relative; isolation:isolate; overflow:hidden;
+  transition:color .5s var(--ease);
+}
+.cap__bg{ position:absolute; inset:0; z-index:-1; opacity:.13; transform:scale(1.07); transition:opacity .6s var(--ease), transform .9s var(--ease); }
+.cap__bg img{ width:100%; height:100%; object-fit:cover; filter:saturate(.55) sepia(.2) brightness(.46); }
+.cap:hover{ color:var(--bone); }
+.cap:hover .cap__bg{ opacity:1; transform:scale(1); }
+.cap:hover .cap__n{ color:var(--amber); }
+.cap:hover .cap__desc{ color:rgba(248,242,233,.82); }
+.cap__n{ font-family:var(--mono); font-size:var(--t-label); letter-spacing:.16em; color:var(--clay); transition:color .4s var(--ease); }
+.cap__title{ margin-top:auto; padding-top:2rem; font-size:clamp(1.3rem,2.3vw,2rem); font-weight:600; letter-spacing:-.03em; line-height:1.08; }
+.cap__desc{ margin-top:.8rem; font-size:.9375rem; color:var(--muted); max-width:34ch; transition:color .5s var(--ease); }
+
+/* ==========================================================================
+   Industries — plain responsive grid.
+   This used to be a pinned, scroll-hijacked horizontal rail. It looked
+   unfinished (cards mid-scroll never sat fully in frame at rest) and the
+   pin was one of the heavier ScrollTrigger instances on the page. A grid
+   shows every card fully, always, with no scroll-jacking and no JS cost.
+   ========================================================================== */
+.indhead{ margin-bottom:clamp(2rem,4vw,3rem); }
+.indhead .h2{ max-width:18ch; }
+.indhead .lead{ max-width:56ch; }
+.indgrid{ display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(1rem,1.8vw,1.75rem); }
+.ind__media{ aspect-ratio:3/4; border-radius:var(--r); overflow:hidden; }
+.ind__meta{ display:flex; justify-content:space-between; align-items:baseline; gap:1rem; margin-top:1rem; padding-top:.85rem; border-top:1px solid var(--line); }
+.ind__meta h3{ font-size:1.0625rem; font-weight:550; letter-spacing:-.02em; }
+
+/* ==========================================================================
+   Process steps
+   ========================================================================== */
+.step{ display:grid; grid-template-columns:auto 1fr auto; gap:clamp(1rem,3vw,3rem); align-items:start; padding-block:clamp(1.6rem,3.4vw,2.6rem); border-top:1px solid var(--line); }
+.step:last-child{ border-bottom:1px solid var(--line); }
+.step__n{ font-family:var(--mono); font-size:var(--t-label); letter-spacing:.16em; color:var(--clay); padding-top:.55rem; }
+.step__body h3{ max-width:22ch; }
+.step__body p{ margin-top:.75rem; max-width:54ch; color:var(--muted); }
+.step__time{ font-family:var(--mono); font-size:var(--t-small); color:var(--muted); padding-top:.6rem; white-space:nowrap; }
+
+/* ==========================================================================
+   Network, collage, locations
+   ========================================================================== */
+/* Equal triptych, no staggered offsets — the old 12-col stagger left a
+   large flat void under the shorter columns. Three matched frames read as
+   one deliberate set instead. */
+.collage{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(.75rem,1.6vw,1.5rem); }
+.collage > .media{ aspect-ratio:3/4; }
+
+.locs{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(248,242,233,.16); border-block:1px solid rgba(248,242,233,.16); }
+.loc{ background:var(--ink); padding:clamp(1.4rem,3vw,2.5rem); transition:background .5s var(--ease); }
+.loc:hover{ background:var(--clay); }
+.loc h3{ font-size:clamp(1.3rem,2.6vw,2.1rem); font-weight:600; letter-spacing:-.035em; }
+.loc p{ margin-top:.5rem; font-size:.875rem; color:#A99786; transition:color .4s; }
+.loc:hover p{ color:rgba(248,242,233,.88); }
+
+/* ==========================================================================
+   CTA band
+   ========================================================================== */
+.cta{ position:relative; overflow:hidden; isolation:isolate; padding-block:clamp(5rem,12vw,10rem); }
+.cta::before{ content:""; position:absolute; inset:0; z-index:-3; background:var(--ink); }
+.cta__glow{
+  position:absolute; inset:-30%; z-index:-2;
+  background:radial-gradient(45% 50% at 50% 45%, rgba(226,121,60,.34), transparent 66%),
+             radial-gradient(40% 40% at 82% 78%, rgba(237,176,74,.2), transparent 68%);
+  animation:drift 30s var(--ease-io) infinite alternate;
+}
+.cta__title{ max-width:15ch; }
+.cta__row{ display:flex; flex-wrap:wrap; gap:2rem 3rem; justify-content:space-between; align-items:end; margin-top:clamp(2rem,4vw,3.5rem); }
+.cta__facts{ display:grid; gap:.9rem; }
+.cta__fact{ display:flex; gap:.75rem; align-items:baseline; font-size:.9375rem; }
+.cta__fact .label{ min-width:9ch; }
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.ftr{ background:var(--ink); color:var(--bone); padding-top:clamp(3rem,6vw,5rem); }
+.ftr__top{ display:grid; grid-template-columns:1.6fr repeat(3,1fr); gap:clamp(2rem,4vw,3rem); padding-bottom:clamp(3rem,6vw,5rem); }
+.ftr__col h4{ font-family:var(--mono); font-size:var(--t-label); letter-spacing:.16em; text-transform:uppercase; color:#A99786; margin-bottom:1.1rem; }
+.ftr__col li+li{ margin-top:.6rem; }
+.ftr__col a{ opacity:.84; font-size:.9375rem; }
+.ftr__col a:hover{ opacity:1; color:var(--ember); }
+.ftr__mark{ font-family:var(--serif); font-size:clamp(1.5rem,2.6vw,2.1rem); font-weight:400; letter-spacing:-.01em; }
+.ftr__note{ margin-top:1rem; max-width:36ch; color:#A99786; font-size:.9375rem; }
+.ftr__word{
+  font-family:var(--serif); font-size:clamp(3rem,15.4vw,14rem); font-weight:400; letter-spacing:-.01em; line-height:.86;
+  color:rgba(248,242,233,.1); white-space:nowrap; padding-bottom:.06em; user-select:none;
+  overflow:hidden; text-overflow:clip; max-width:100%;
+}
+.ftr__bar{ display:flex; flex-wrap:wrap; gap:.75rem 2rem; justify-content:space-between; align-items:center; border-top:1px solid rgba(248,242,233,.16); padding-block:1.4rem; font-size:.8125rem; color:#A99786; }
+
+/* ==========================================================================
+   Careers — value props, roles accordion, form
+   ========================================================================== */
+.props{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--r-lg); overflow:hidden; }
+.prop{ background:var(--bg); padding:clamp(1.5rem,2.6vw,2.4rem); display:flex; flex-direction:column; gap:.8rem; min-height:clamp(210px,20vw,280px); }
+.prop__ico{ width:38px; height:38px; border-radius:50%; display:grid; place-items:center; background:rgba(194,81,43,.12); color:var(--clay); font-family:var(--mono); font-size:.8125rem; }
+.prop h3{ font-size:1.1875rem; font-weight:600; letter-spacing:-.025em; margin-top:auto; }
+.prop p{ font-size:.9375rem; color:var(--muted); }
+
+.roles{ border-top:1px solid var(--line); }
+.role{ border-bottom:1px solid var(--line); }
+.role__btn{
+  width:100%; display:grid; grid-template-columns:auto 1fr auto auto; gap:clamp(.8rem,2.4vw,2.5rem);
+  align-items:center; text-align:left; padding-block:clamp(1.4rem,2.8vw,2.2rem);
+  transition:color .4s var(--ease);
+}
+.role__btn:hover{ color:var(--clay); }
+.role__n{ font-family:var(--mono); font-size:var(--t-label); letter-spacing:.16em; color:var(--muted); }
+.role__t{ font-size:clamp(1.15rem,2.5vw,2.05rem); font-weight:600; letter-spacing:-.032em; line-height:1.1; }
+.role__tag{
+  font-family:var(--mono); font-size:var(--t-label); letter-spacing:.14em; text-transform:uppercase;
+  padding:.4rem .7rem; border-radius:999px; background:rgba(194,81,43,.1); color:var(--clay); white-space:nowrap;
+}
+.role__tag--soft{ background:var(--bone-3); color:var(--muted); }
+.role__plus{ width:34px; height:34px; border-radius:50%; box-shadow:inset 0 0 0 1px var(--line); display:grid; place-items:center; position:relative; flex:none; transition:background .4s, box-shadow .4s; }
+.role__plus::before,.role__plus::after{ content:""; position:absolute; background:currentColor; transition:transform .45s var(--ease); }
+.role__plus::before{ width:12px; height:1.5px; }
+.role__plus::after{ width:1.5px; height:12px; }
+.role.is-open .role__plus{ background:var(--clay); color:var(--bone); box-shadow:none; }
+.role.is-open .role__plus::after{ transform:scaleY(0); }
+.role__panel{ overflow:hidden; height:0; }
+.role__inner{ display:grid; grid-template-columns:1.3fr 1fr; gap:clamp(1.5rem,4vw,4rem); padding-bottom:clamp(1.75rem,3.4vw,2.75rem); }
+.role__inner p{ color:var(--muted); max-width:58ch; }
+.role__specs{ display:grid; gap:.7rem; align-content:start; }
+.role__spec{ display:flex; gap:1rem; justify-content:space-between; border-bottom:1px dashed var(--line); padding-bottom:.6rem; font-size:.9375rem; }
+.role__spec span:first-child{ color:var(--muted); }
+.role__skills{ display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.2rem; }
+.chip{ font-size:.8125rem; padding:.4rem .75rem; border-radius:999px; box-shadow:inset 0 0 0 1px var(--line); color:var(--muted); }
+
+/* Form */
+.form{ display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(1rem,2vw,1.5rem); }
+.field{ display:grid; gap:.5rem; }
+.field--full{ grid-column:1 / -1; }
+.field label{ font-family:var(--mono); font-size:var(--t-label); letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+.field input,.field select,.field textarea{
+  width:100%; background:transparent; border:0; border-bottom:1px solid var(--line);
+  padding:.85rem 0; font-size:1.0625rem; letter-spacing:-.015em; border-radius:0;
+  transition:border-color .4s var(--ease);
+}
+.field textarea{ resize:vertical; min-height:120px; }
+.field input:focus,.field select:focus,.field textarea:focus{ outline:none; border-color:var(--clay); }
+.field input::placeholder,.field textarea::placeholder{ color:rgba(124,106,92,.55); }
+.dark .field select{ color:var(--bone); }
+.dark .field select option{ color:var(--ink); }
+.form__foot{ grid-column:1 / -1; display:flex; flex-wrap:wrap; gap:1rem 2rem; align-items:center; justify-content:space-between; margin-top:.75rem; }
+.form__note{ font-size:.8125rem; color:var(--muted); max-width:44ch; }
+.form__msg{ grid-column:1 / -1; font-size:.9375rem; color:var(--clay); }
+
+/* ==========================================================================
+   Home — industry chip row (links out to services.html#industries)
+   ========================================================================== */
+.chiprow{ display:flex; flex-wrap:wrap; gap:.6rem; }
+.chiprow a{
+  font-size:.9375rem; padding:.6rem 1.1rem; border-radius:999px; box-shadow:inset 0 0 0 1px var(--line);
+  transition:background .35s var(--ease), color .35s var(--ease), box-shadow .35s var(--ease);
+}
+.chiprow a:hover{ background:var(--ink); color:var(--bone); box-shadow:inset 0 0 0 1px var(--ink); }
+.dark .chiprow a{ box-shadow:inset 0 0 0 1px rgba(248,242,233,.24); }
+.dark .chiprow a:hover{ background:var(--clay); box-shadow:inset 0 0 0 1px var(--clay); }
+
+/* Page hero (interior pages) */
+.phero{ position:relative; overflow:hidden; isolation:isolate; padding-top:clamp(8rem,18vw,12rem); padding-bottom:clamp(3rem,7vw,6rem); }
+.phero__title{ max-width:16ch; margin-block:clamp(1.5rem,4vw,2.5rem) clamp(1.25rem,2.5vw,2rem); }
+.phero__title .em{ color:var(--ember); }
+.phero__row{ display:flex; flex-wrap:wrap; gap:1.5rem 3rem; justify-content:space-between; align-items:end; }
+.phero__copy{ max-width:52ch; }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width:1180px){
+  .caps{ grid-template-columns:repeat(2,1fr); }
+  .props{ grid-template-columns:repeat(2,1fr); }
+  .ftr__top{ grid-template-columns:1fr 1fr; }
+  .manifesto__grid{ grid-template-columns:1fr 1fr; }
+  .indgrid{ grid-template-columns:repeat(3,1fr); }
+}
+@media (max-width:900px){
+  .nav,.hdr__cta .btn{ display:none; }
+  .burger{ display:flex; }
+  .split{ grid-template-columns:1fr; }
+  .split__aside{ position:static; }
+  .hero__row{ align-items:start; }
+  .hero__aside{ flex:1 1 auto; }
+  .work__grid{ grid-template-columns:1fr; }
+  /* Any generic two/three/four-column grid (e.g. careers' "what we ask in
+     return" image + text split) stacks on tablet and below — left at
+     repeat(N,1fr) here, a photo column was being squeezed to a sliver
+     next to full-width text instead of stacking. */
+  .cols-2,.cols-3,.cols-4{ grid-template-columns:1fr; }
+  /* Cards are taller than a phone screen, so stacking them is just a jam. */
+  .card{ grid-template-columns:1fr; position:static; }
+  .card__media{ order:-1; aspect-ratio:16/10; }
+  .role__inner{ grid-template-columns:1fr; }
+  .role__btn{ grid-template-columns:1fr auto; row-gap:.6rem; }
+  .role__n{ display:none; }
+  .role__tag{ grid-column:1; justify-self:start; }
+  .collage{ grid-template-columns:repeat(2,1fr); }
+  .collage > .media:first-child{ grid-column:1 / span 2; aspect-ratio:16/10; }
+  .indgrid{ grid-template-columns:repeat(2,1fr); }
+  .stats,.locs,.hero__strip{ grid-template-columns:repeat(2,1fr); }
+  .step{ grid-template-columns:1fr; }
+  .step__n{ padding-top:0; }
+  .step__time{ padding-top:.25rem; }
+}
+@media (max-width:640px){
+  .caps,.props,.manifesto__grid{ grid-template-columns:1fr; }
+  .ftr__top{ grid-template-columns:1fr; }
+  .form{ grid-template-columns:1fr; }
+  .hero{ min-height:92svh; }
+  .hero__strip{ gap:1.25rem 1rem; }
+  .btn{ padding:.9rem 1.4rem; }
+  .indgrid{ grid-template-columns:1fr; }
+  /* AeroShards' own mobile particle path already reads busy on a small,
+     dense screen — a shallower canvas opacity backs it off further,
+     without touching how the effect itself renders. */
+  [data-bg="shards"].is-live{ opacity:.55; }
+}
+
+/* ==========================================================================
+   Reduced motion
+   ========================================================================== */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+  .js [data-reveal]{ opacity:1 !important; transform:none !important; clip-path:none !important; }
+  .js [data-split] .wd{ transform:none !important; }
+  .js [data-scrub] .wd{ opacity:1 !important; }
+  .marq__track{ animation:none; }
+  .curtain{ display:none; }
+}
+
+/* Print */
+@media print{
+  .hdr,.drawer,.curtain,.cursor,.marq,.bg-fx{ display:none !important; }
+  body{ background:#fff; color:#000; }
+}
