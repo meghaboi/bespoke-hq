@@ -90,14 +90,45 @@ export default function Iridescence({ color = [1, 1, 1], speed = 1.0, amplitude 
     });
 
     const mesh = new Mesh(gl, { geometry, program });
-    let animateId;
+
+    // Nothing else in this file paused the render loop, so scrolling this
+    // section out of view didn't stop it drawing at full rate — a real cost
+    // once several of these widgets are alive on one page at once. Same
+    // IntersectionObserver + visibilitychange pattern AeroShards already
+    // uses: identical pixels while on screen, zero work while it isn't.
+    let animateId = 0;
+    let visible = true;
 
     function update(t) {
       animateId = requestAnimationFrame(update);
       program.uniforms.uTime.value = t * 0.001;
       renderer.render({ scene: mesh });
     }
-    animateId = requestAnimationFrame(update);
+    function start() {
+      if (animateId || !visible || document.hidden) return;
+      animateId = requestAnimationFrame(update);
+    }
+    function stop() {
+      if (animateId) cancelAnimationFrame(animateId);
+      animateId = 0;
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible) start();
+        else stop();
+      },
+      { threshold: 0.01 }
+    );
+    io.observe(ctn);
+
+    function handleVisibilityChange() {
+      if (document.hidden) stop();
+      else start();
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     ctn.appendChild(gl.canvas);
 
     function handleMouseMove(e) {
@@ -113,7 +144,9 @@ export default function Iridescence({ color = [1, 1, 1], speed = 1.0, amplitude 
     }
 
     return () => {
-      cancelAnimationFrame(animateId);
+      stop();
+      io.disconnect();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('resize', resize);
       if (mouseReact) {
         ctn.removeEventListener('mousemove', handleMouseMove);

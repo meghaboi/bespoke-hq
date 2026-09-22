@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { forwardRef, useRef, useMemo, useLayoutEffect, useEffect } from 'react';
+import { forwardRef, useRef, useMemo, useLayoutEffect, useEffect, useState } from 'react';
 import { Color } from 'three';
 
 const hexToNormalizedRGB = hex => {
@@ -106,6 +106,27 @@ SilkPlane.displayName = 'SilkPlane';
 
 const Silk = ({ speed = 5, scale = 1, color = '#7B7481', noiseIntensity = 1.5, rotation = 0, lightMode = false }) => {
   const meshRef = useRef();
+  const wrapRef = useRef(null);
+
+  // frameloop="always" (r3f default we relied on) never stops, even scrolled
+  // fully out of view — same fix as Iridescence: an IntersectionObserver +
+  // visibilitychange pair gates it to r3f's own "never" mode, which halts
+  // the render loop outright. Pixel-identical whenever it's actually visible.
+  const [inView, setInView] = useState(true);
+  const [tabVisible, setTabVisible] = useState(typeof document === 'undefined' || !document.hidden);
+
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.01 });
+    io.observe(el);
+    const onVisibilityChange = () => setTabVisible(!document.hidden);
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => {
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+    };
+  }, []);
 
   const uniforms = useMemo(
     () => ({
@@ -131,9 +152,11 @@ const Silk = ({ speed = 5, scale = 1, color = '#7B7481', noiseIntensity = 1.5, r
   }, [speed, scale, noiseIntensity, color, rotation, lightMode, uniforms]);
 
   return (
-    <Canvas dpr={[1, 2]} frameloop="always">
-      <SilkPlane ref={meshRef} uniforms={uniforms} />
-    </Canvas>
+    <div ref={wrapRef} style={{ width: '100%', height: '100%' }}>
+      <Canvas dpr={[1, 2]} frameloop={inView && tabVisible ? 'always' : 'never'}>
+        <SilkPlane ref={meshRef} uniforms={uniforms} />
+      </Canvas>
+    </div>
   );
 };
 
